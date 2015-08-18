@@ -94,6 +94,12 @@ POST_Y = 744;
 POST_X_V = 272;
 
 def checkParams():
+	global POST_X
+	global POST_Y
+	global Video
+	global Photo
+	global actVideo
+	global actPhoto
 	dType = sys.argv[1]
 	print "%s" %(dType)
 	print "dType.length=%d" %(len(dType))
@@ -120,6 +126,13 @@ def checkParams():
 		POST_X = 240;
 		POST_Y = 744;
 		POST_X_V = 272;
+		Photo='com.android.camera2/com.android.camera.CameraActivity'
+		actPhoto='android.media.action.STILL_IMAGE_CAMERA'
+		Video='com.android.camera2/com.android.camera.VideoCamera'
+		actVideo='android.media.action.VIDEO_CAMERA'
+	elif(NOT_FOUND != tmp.find("FLY_FS502")):
+		POST_X = 370;
+		POST_Y = 1170;
 		Photo='com.android.camera2/com.android.camera.CameraActivity'
 		actPhoto='android.media.action.STILL_IMAGE_CAMERA'
 		Video='com.android.camera2/com.android.camera.VideoCamera'
@@ -165,6 +178,8 @@ def Flick(i,start,end):
 
 def capVideo(i):
 	## switch to Video
+	dType = sys.argv[1]
+	tmp = dType
 	LOGD(TAG, str(i) + ":Switch to video capture...");
 	MonkeyRunner.sleep(1);
 	device.startActivity(component=Video,action=actVideo)
@@ -172,9 +187,16 @@ def capVideo(i):
 	MonkeyRunner.sleep(2);
 	device.touch(POST_X, POST_Y, MonkeyDevice.DOWN_AND_UP);
 	LOGD(TAG, str(i) + ":Recording video...");
-	MonkeyRunner.sleep(4);
-	device.touch(POST_X_V, POST_Y, MonkeyDevice.DOWN_AND_UP);
-	LOGD(TAG, str(i) + ":Waiting for store video...");
+	MonkeyRunner.sleep(6);
+	device.touch(POST_X, POST_Y, MonkeyDevice.DOWN_AND_UP);
+	MonkeyRunner.sleep(2);
+	if(NOT_FOUND != tmp.find("SW07")):
+		print "android L capVideo use startActivity";
+	elif(NOT_FOUND == tmp.find("YourType")):
+		device.touch(POST_X_V, POST_Y, MonkeyDevice.DOWN_AND_UP);
+		LOGD(TAG, str(i) + ":Waiting for store video...");
+	else:
+		print "Why are you goto here";
 	doClick('KEYCODE_BACK', 'DOWN_AND_UP');
 	LOGD(TAG, str(i) + ":Take video finished.");
 
@@ -186,6 +208,7 @@ def capPhoto(i):
 	LOGD(TAG, str(i) + ":Take photo...");
 	MonkeyRunner.sleep(2);
 	device.touch(POST_X, POST_Y, MonkeyDevice.DOWN_AND_UP);
+	MonkeyRunner.sleep(4);
 	LOGD(TAG, str(i) + ":Exiting Photo...");
 	doClick('KEYCODE_BACK', 'DOWN_AND_UP');
 	LOGD(TAG, str(i) + ":Take photo finished.")
@@ -202,6 +225,7 @@ def doTask():
 		capPhoto(i);
 
 checkParams()
+print "POST_X = %d,POST_Y = %d,Video = %s,Photo = %s" %(POST_X,POST_Y,Video,Photo)
 # Connects to the current device, returning a MonkeyDevice object
 device = MonkeyRunner.waitForConnection()
 doClick('KEYCODE_BACK','DOWN_AND_UP')

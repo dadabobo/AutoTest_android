@@ -58,7 +58,8 @@ fi
 echo "Set repeat to ${repeat}"
 
 #DTYPE=`adb shell getprop ro.yulong.version.software | cut -d'.' -f6`
-DTYPE=`adb shell getprop ro.yulong.version.software`
+#DTYPE=`adb shell getprop ro.yulong.version.software`
+DTYPE=`adb shell getprop ro.product.cg_version`
 
 # init log folder and file
 logdir=${PWD}/logs/${proj}_`date +%Y%m%d%H%M%S`

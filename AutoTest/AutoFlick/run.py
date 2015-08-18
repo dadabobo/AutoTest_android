@@ -78,7 +78,9 @@ def checkParams():
 	"""
 	tmp = dType
 	if(NOT_FOUND != tmp.find("7060S")):
+		print "7060S"
 	elif(NOT_FOUND != tmp.find("7061")):
+		print "7061"
 	elif(NOT_FOUND != tmp.find("YourType")):
 		""" If you want add devices, just modify bellow
 		Add your device's position here.

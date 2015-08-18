@@ -59,7 +59,8 @@ fi
 echo "Set repeat to ${repeat}"
 
 #DTYPE=`adb shell getprop ro.yulong.version.software | cut -d'.' -f6`
-DTYPE=`adb shell getprop ro.yulong.version.software`
+#DTYPE=`adb shell getprop ro.yulong.version.software`
+DTYPE=`adb shell getprop ro.product.cg_version`
 
 # init log folder and file
 logdir=${PWD}/logs/${proj}_`date +%Y%m%d%H%M%S`
@@ -105,13 +106,13 @@ function caplog()
 
 function slog4pc()
 {
-	echo "============================== Capture slog."
+	echo "============================== Capture slog." 
 	${PWD}/slog/linux/LogAndroid2PC.sh
 }
 
 function doRun()
 {
-	#echo "monkeyrunner ${run_file} ${DTYPE} \>\> ${logpath} 2\>\&1"
+	echo "monkeyrunner ${run_file} ${DTYPE} >> ${logpath} 2\>\&1"
 	monkeyrunner ${run_file} ${DTYPE} >> ${logpath} 2>&1
 	if [ $DEBUG -eq 0 ]
 	then

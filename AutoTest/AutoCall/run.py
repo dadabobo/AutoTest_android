@@ -39,9 +39,33 @@ DEBUG = 1
 testCount = 1000;
 NOT_FOUND = -1
 
+TOUCH_DELAY = 1
+
+# call icon position in callboard
+CALL_ICON_X = 240
+CALL_ICON_Y = 805
+# end call
+END_ICON_X = 247
+END_ICON_Y = 792
+# sim card selection
+SIM1_ICON_X = 226
+SIM1_ICON_Y = 449
+SIM2_ICON_X = 226
+SIM2_ICON_Y = 537
+
 module='com.android.dialer/.DialtactsActivity'
 
 def checkParams():
+	global TOUCH_DELAY
+	global CALL_ICON_X
+	global CALL_ICON_Y
+	global END_ICON_X
+	global END_ICON_Y
+	global SIM1_ICON_X
+	global SIM1_ICON_Y
+	global SIM2_ICON_X
+	global SIM2_ICON_Y
+	global module
 	dType = sys.argv[1]
 	print "%s" %(dType)
 	print "dType.length=%d" %(len(dType))
@@ -84,13 +108,32 @@ def checkParams():
 		SIM1_ICON_Y = 449;
 		SIM2_ICON_X = 226;
 		SIM2_ICON_Y = 537;
+	elif(NOT_FOUND != tmp.find("FLY_FS502")):
+		""" This is a area you can modify
+		"""
+		module='com.android.dialer/.DialtactsActivity'
+		# call icon position in callboard
+		CALL_ICON_X = 360;
+		CALL_ICON_Y = 1190;
+		# end call
+		END_ICON_X = 360;
+		END_ICON_Y = 1140;
+		# sim card selection postion
+		SIM1_ICON_X = 340;
+		SIM1_ICON_Y = 120;
+		SIM2_ICON_X = 340;
+		SIM2_ICON_Y = 260;
+		TOUCH_DELAY = 2
 	else:
 		""" This is else branch
 		"""
 
+def cgPause(dauer):
+	MonkeyRunner.sleep(dauer)
+
 def doTask():
 	for i in range(0, testCount):
-		MonkeyRunner.sleep(2);
+		cgPause(2)
 		LOGD("doTask", "make a Call -- SIM-1")
 		makeCall(1, i)
 		LOGD("doTask", "make a Call -- SIM-2")
@@ -103,14 +146,14 @@ def LOGD(TAG, msg):
 def pressKey(keyStr):
 	mTAG = "pressKey"
 	LOGD(mTAG, "Press the " + keyStr)
-	device.press(keyStr, 'DOWN_AND_UP');
-	MonkeyRunner.sleep(1);
+	device.press(keyStr, 'DOWN_AND_UP')
+	cgPause(TOUCH_DELAY)
 
 def touchPos(pos_x, pos_y):
 	mTAG = "touchPos"
 	LOGD(mTAG, "Touch the postion is (" + str(pos_x) + "," + str(pos_y) + ")")
 	device.touch(pos_x, pos_y, MonkeyDevice.DOWN_AND_UP);
-	MonkeyRunner.sleep(1);
+	cgPause(TOUCH_DELAY)
 
 def makeCall(sim, loop):
 	mTAG = "makeCall"
@@ -122,12 +165,13 @@ def makeCall(sim, loop):
 		sim_y = SIM2_ICON_Y
 
 	# open dail pad
-	MonkeyRunner.sleep(1);
+	cgPause(1);
 	LOGD(mTAG, "[" + str(loop) + "] Openning phone call dial...")
 	device.startActivity(component=module);
-	MonkeyRunner.sleep(1);
+	cgPause(2);
 
 	# dail a number
+	LOGD(mTAG, "[" + str(loop) + "]" + str(CALL_ICON_X) + ", " + str(CALL_ICON_Y))
 	LOGD(mTAG, "[" + str(loop) + "] click dial pad...")
 	touchPos(CALL_ICON_X, CALL_ICON_Y)
 	LOGD(mTAG, "[" + str(loop) + "] click dial pad...")
@@ -136,10 +180,11 @@ def makeCall(sim, loop):
 	# select sim card
 	LOGD(mTAG, "[" + str(loop) + "] select a sim1 card...")
 	touchPos(sim_x, sim_y)
-	MonkeyRunner.sleep(15);
+	cgPause(8)
 
 	# end call
 	LOGD(mTAG, "[" + str(loop) + "] end call...")
+	LOGD(mTAG, "[" + str(loop) + "]" + str(END_ICON_X) + ", " + str(END_ICON_Y))
 	touchPos(END_ICON_X, END_ICON_Y)
 
 	# press key_back and key_home
@@ -152,4 +197,5 @@ device = MonkeyRunner.waitForConnection()
 pressKey('KEYCODE_BACK')
 pressKey('KEYCODE_HOME')
 doTask()
+#makeCall(1, 1)
 LOGD(TAG, "Test finished.")

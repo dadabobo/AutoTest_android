@@ -93,6 +93,21 @@ function loadConfig()
 #}
 #exit 0
 
+function killMonkey()
+{
+	PID=`adb shell ps|grep "com.android.commands.monkey"|awk '{print $2}'`
+	if [ -n "${PID}" ]
+	then
+		echo "monkey PID = "${PID}
+		echo "adb shell kill -9 ${PID}"
+		adb shell "kill -9 ${PID}"
+	else
+		echo "there is not monkey PID"
+	fi
+	sleep 1
+}
+
+
 function menu()
 {
 	tmp=$(ls -d Auto*);
@@ -140,7 +155,9 @@ function menu()
 #	${sh_AutoCamera} ${PWD}/AutoCamera/Camera.py
 #}
 
+killMonkey
 menu
+
 ## version 1.0.1
 # now will not use it
 #read -p "Choose the test you want do? " ch

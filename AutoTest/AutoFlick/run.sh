@@ -21,7 +21,10 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 #====================================================================================
-DTYPE=`adb shell getprop ro.yulong.version.software`
+#DTYPE=`adb shell getprop ro.yulong.version.software`
+DTYPE=`adb shell getprop ro.product.cg_version`
+
+run_file=$1
 
 function chk()
 {
@@ -32,7 +35,7 @@ function chk()
 			exit 0
 			;;
 		*)
-			monkeyrunner ./run.py ${DTYPE}
+			monkeyrunner ${run_file} ${DTYPE}
 			chk
 			;;
 	esac

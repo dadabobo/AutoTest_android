@@ -36,11 +36,16 @@ TAG = "AutoBluetooth"
 DEBUG = 1
 NOT_FOUND = -1
 
+cmps=''
 module='com.android.settings/com.android.settings.Settings'
+androidL_module='com.android.settings/.bluetooth.BluetoothSettings'
 OPEN_CLOSE_X = 368
 OPEN_CLOSE_Y = 182
 
 def checkParams():
+	global OPEN_CLOSE_X
+	global OPEN_CLOSE_Y
+	global cmps
 	dType = sys.argv[1]
 	print "%s" %(dType)
 	print "dType.length=%d" %(len(dType))
@@ -56,11 +61,18 @@ def checkParams():
 	"""
 	tmp = dType
 	if(NOT_FOUND != tmp.find("7060S")):
-		OPEN_CLOSE_X = 340
-		OPEN_CLOSE_Y = 330
+		OPEN_CLOSE_X = 340;
+		OPEN_CLOSE_Y = 330;
+		cmps = str(module)
 	elif(NOT_FOUND != tmp.find("7061")):
-		OPEN_CLOSE_X = 335
-		OPEN_CLOSE_Y = 325
+		OPEN_CLOSE_X = 335;
+		OPEN_CLOSE_Y = 325;
+		cmps = str(module)
+	elif(NOT_FOUND != tmp.find("FLY_FS502")):
+		print "find SW07 in %s" %(tmp)
+		OPEN_CLOSE_X = 370
+		OPEN_CLOSE_Y = 220
+		cmps = str(androidL_module)
 	elif(NOT_FOUND != tmp.find("YourType")):
 		""" If you want add devices, just modify bellow
 		Add your device's position here.
@@ -88,7 +100,8 @@ device = MonkeyRunner.waitForConnection()
 #height = MonkeyDevice.getProperty(display.height);
 doClick('KEYCODE_BACK', 'DOWN_AND_UP');
 doClick('KEYCODE_BACK', 'DOWN_AND_UP');
-device.startActivity(component=module);
+print "cmps = %s ,OPEN_CLOSE_X = %d ,OPEN_CLOSE_Y = %d" %(cmps,OPEN_CLOSE_X,OPEN_CLOSE_Y)
+device.startActivity(component=cmps);
 MonkeyRunner.sleep(2);
 for i in range(0,testCount):
 	MonkeyRunner.sleep(2);
