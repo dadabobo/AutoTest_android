@@ -31,7 +31,7 @@ import sys;
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice, MonkeyImage
 from com.android.monkeyrunner.easy import EasyMonkeyDevice, By
 
-testCount = 10000
+testCount = 1000
 TAG = "AutoBluetooth"
 DEBUG = 1
 NOT_FOUND = -1

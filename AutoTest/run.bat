@@ -13,19 +13,35 @@ echo exist monkeyrunner is:%PID%
 %ADB_CMD% shell "kill -9 %PID%"
 echo kill PID : %PID%
 
+::set debug value
+set DEBUG=%1
+set repeat=%2
+if "%DEBUG%"=="" goto ISDEBUG
+if %DEBUG%==1 goto NODEBUG
+if %DEBUG%==0 goto ISDEBUG
+
+:ISDEBUG
+set DEBUG=0
+goto END
+:NODEBUG
+set DEBUG=1
+goto END
+:END
+echo DEBUG set to:%DEBUG%
+
 ::TEST menu
 :loop
 echo ========================================
 echo ____________AutoTest Menu_______________
 echo ----------------------------------------
 echo.
-echo        0£¬AutoBluetooth
-echo        1£¬AutoCall
-echo        2£¬AutoCamera
-echo        3£¬AutoCopyDel
-echo        4£¬AutoFlick
-echo        5£¬AutoIn.Un.Install
-echo        6£¬AutoOpenApps
+echo        0, AutoBluetooth
+echo        1, AutoCall
+echo        2, AutoCamera
+echo        3, AutoCopyDel
+echo        4, AutoFlick
+echo        5, AutoIn.Un.Install
+echo        6, AutoOpenApps
 echo        7, AutoWlanShift
 echo.
 echo ========================================
@@ -45,49 +61,43 @@ exit
 ::TEST items
 :AutoBluetooth
 echo Choose AutoBluetooth
-::cd AutoBluetooth
-call %cd%\AutoBluetooth\run.bat run.py AutoBluetooth 0
+call %cd%\AutoBluetooth\run.bat run.py AutoBluetooth %DEBUG% %repeat%
 pause
 goto end
 :AutoCall
 echo Choose AutoCall
-::cd AutoCall
-call %cd%\AutoCall\run.bat run.py AutoCall 0
+call %cd%\AutoCall\run.bat run.py AutoCall %DEBUG% %repeat%
 pause
 goto end
 :AutoCamera
 echo Choose AutoCamera
-::cd AutoCamera
-call %cd%\AutoCamera\run.bat run.py AutoCamera 0
+call %cd%\AutoCamera\run.bat run.py AutoCamera %DEBUG% %repeat%
 pause
 goto end
 :AutoCopyDel
 echo Choose AutoCopyDel
-::cd AutoCopyDel
-call %cd%\AutoCopyDel\run.bat run.py AutoCopyDel 0
+call %cd%\AutoCopyDel\run.bat run.py AutoCopyDel %DEBUG% %repeat%
 pause
 goto end
 :AutoFlick
 echo Choose AutoFlick
-::cd AutoFlick
-call %cd%\AutoFlick\run.bat run.py AutoFlick 0
+call %cd%\AutoFlick\run.bat run.py AutoFlick %DEBUG% %repeat%
 pause
 goto end
 :AutoInUnInstall
 echo Choose AutoIn.Un.Install
-::cd AutoIn.Un.Install
-call %cd%\AutoIn.Un.Install\run.bat run.py AutoIn.Un.Install 0
+call %cd%\AutoIn.Un.Install\run.bat run.py AutoIn.Un.Install %DEBUG% %repeat%
 pause
 goto end
 :AutoOpenApps
 echo Choose AutoOpenApps
-::cd AutoOpenApps
-call %cd%\AutoOpenApps\run.bat run.py AutoOpenApps 0
+call %cd%\AutoOpenApps\run.bat run.py AutoOpenApps %DEBUG% %repeat%
 pause
 goto end
 :AutoWlanShift
 echo Choose AutoWlanShift
-::cd AutoWlanShift
-call %cd%\AutoWlanShift\run.bat run.py AutoWlanShift 0
+call %cd%\AutoWlanShift\run.bat run.py AutoWlanShift %DEBUG% %repeat%
 pause
 goto end
+:end
+exit

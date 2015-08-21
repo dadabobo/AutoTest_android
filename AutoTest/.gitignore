@@ -35,5 +35,8 @@ nosetests.xml
 .project
 .pydevproject
 
+.gitignore
 gen
 logs
+slog\windows\logs
+tools
