@@ -8,7 +8,7 @@ linux:
 	y = 1...(this is test repeat times.sum times = 1000*y)
 	
 	you can run like :./run.sh 
-	this meanings ./run.sh x=0 y=10
+	this meanings ./run.sh 0 10
 	
 	logs:
 	monkeyrunner log save to path : ./logs
@@ -20,7 +20,7 @@ windows:
 	y = 1...(this is test repeat times.sum times = 1000*y)
 	
 	you can run like :run.bat
-	this meanings run.bat x=0 y=10
+	this meanings run.bat 0 10
 	
 	logs:
 	monkeyrunner log save to path : ./logs
