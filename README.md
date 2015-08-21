@@ -3,6 +3,7 @@
 This AutoTest has linux and windows
 
 linux:
+
 	./run.sh x y
 	x = 0/1 (0-get android log, 1-didn't get android log)
 	y = 1...(this is test repeat times.sum times = 1000*y)
@@ -15,6 +16,7 @@ linux:
 	android log save to path : ./logs
 	
 windows:
+
 	run.bat x y
 	x = 0/1 (0-get android log, 1-didn't get android log)
 	y = 1...(this is test repeat times.sum times = 1000*y)

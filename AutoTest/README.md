@@ -1,5 +1,8 @@
 monkeyrunner
 ============
+v1.1.2
+Add windows bat script.
+
 v1.1.0
 ------------
 Use short key `Ctrl+alt+T` to open a terminal. Then change to this fold, just execute script `run.sh`
