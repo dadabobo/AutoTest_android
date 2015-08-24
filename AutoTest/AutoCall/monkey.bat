@@ -1,10 +1,14 @@
 @echo off
 
-::set monkeyrunner path
+::init
 set ADB_CMD=%cd%\slog\windows\tools\adb.exe
 set MONKEY=%cd%\tools\sdk\tools\monkeyrunner.bat
 set TAIL=%cd%\slog\tools\tail.exe
 set TEE=%cd%\slog\tools\tee.exe
+set run_file=%1
+set proj=%2
+set DEBUG=%3
+echo init items : run_file(%1), project_name(%2), DEBUG(%3)
 
 ::get phone project version name
 set DTYPE=%ADB_CMD% shell "getprop ro.product.cg_version"
@@ -13,7 +17,7 @@ for /f %%i in ('%DTYPE%') do set DTYPE=%%i
 ::init log file
 ::set date=%DATE:~0,10%_%TIME:~0,8%
 set date=%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%%TIME:~0,2%%TIME:~3,2%%TIME:~6,2%
-set logdir=%cd%\logs\%date%
+set logdir=%cd%\logs\%proj%_%date%
 echo monkey log save path : %logdir%
 mkdir "%logdir%"
 

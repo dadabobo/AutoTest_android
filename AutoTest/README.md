@@ -1,6 +1,6 @@
 monkeyrunner
 ============
-v1.1.2
+v1.2.0
 Add windows bat script.
 
 v1.1.0
